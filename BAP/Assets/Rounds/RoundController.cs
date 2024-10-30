@@ -17,6 +17,12 @@ public class RoundController : MonoBehaviour
     {
         mapController.VirusWave(roundNumber);
         codeController.activitiesController = activitiesController;
+        /*for (int i = 0; i < 100;)
+        {
+            var x = EnhancedRandom.Next(0, 100);
+            if (x > 100 || x < 0)
+            if(x == 99) { Debug.Log(i); i++; }
+        }*/
     }
 
     // Update is called once per frame

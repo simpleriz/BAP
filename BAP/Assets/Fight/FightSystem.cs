@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FightSystem : MonoBehaviour
@@ -28,6 +29,6 @@ public class FightSystem : MonoBehaviour
     public void NewVirus(GameObject virusPrefab){
         GameObject inst = Instantiate(virusPrefab,virusesGrid);
         viruses.Add(inst.GetComponent<FightVirus>());
-
+        viruses.Last().valueLoot = new List<int> { 3,5};
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FightVirus : MonoBehaviour
@@ -8,6 +9,8 @@ public class FightVirus : MonoBehaviour
     public float health = 100;
     [SerializeField] RectTransform HealthBar; 
     public float damage;
+    public List<int> valueLoot;
+
     public virtual void UntilAct(GameScript script, FightPlace place, FightSystem system)
     {
 
@@ -17,6 +20,10 @@ public class FightVirus : MonoBehaviour
         system.Damage(damage);
     }
     public virtual void Kill(){
+        foreach (var item in valueLoot)
+        {
+            LootController.newValueBox(item);
+        }
         Destroy(gameObject);
     }
     public virtual void Damage(float value){

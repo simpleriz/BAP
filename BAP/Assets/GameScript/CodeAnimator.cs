@@ -21,7 +21,6 @@ public class CodeAnimator : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
-        Debug.Log(startPosition);
     }
 
     void FixedUpdate()

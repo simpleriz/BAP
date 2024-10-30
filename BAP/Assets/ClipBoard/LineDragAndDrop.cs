@@ -5,15 +5,14 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class ValueDragAndDrop : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class LineDragAndDrop : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {   
     [SerializeField] CodeController codeController;
     [SerializeField] TextMeshProUGUI textMeshProUGUI;
-    GameValue gameValue;
+    GameLine gameLine;
     private RectTransform rectTransform;
     Vector3 startPosition;
     bool isMouseDown = false;
-    bool lineGenKey;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +38,7 @@ public class ValueDragAndDrop : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         {
             
             isMouseDown = false;
-            if(codeController.PasteValue(gameValue))
+            if(codeController.PasteLine(gameLine))
             {
                 GenerateNewLine();
             }
@@ -55,8 +54,10 @@ public class ValueDragAndDrop : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     }
 
     void GenerateNewLine(){
-        
-        gameValue = ValueLootTable.GetValue(ValueLootTable.GetMaxCost());
-        textMeshProUGUI.text = gameValue.GetContent();
+        gameLine = new GameLine();
+        for(int i = 0;  i < 3; i++){
+            gameLine.actions.Add(LineLootTable.GetLine(LineLootTable.GetMaxCost()));
+        }
+        textMeshProUGUI.text = gameLine.GetContent("");
     }
 }

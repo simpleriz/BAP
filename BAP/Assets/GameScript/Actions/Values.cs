@@ -38,7 +38,9 @@ public class StaticValue : GameValue
             case ValueType.Blue:
                 return "<b><color=blue>["+value.ToString()+"]</b></color>";
             case ValueType.Green:
-                return "<b><color=green>["+value.ToString()+"]</b></color>";
+                return "<b><color=green>[" + value.ToString() + "]</b></color>";
+            case ValueType.Smal:
+                return "<b><color=#00FFFF>[" + value.ToString() + "]</b></color>";
             default:
                 return "<b><color=black>["+value.ToString()+"]</b></color>";
         }
@@ -74,13 +76,7 @@ public class PercentValue : GameValue
         switch(base.type)
         {
             case ValueType.NoneType:
-                return "<b><color=white>["+value.ToString()+"%]</b></color>";
-            case ValueType.Red:
-                return "<b><color=red>["+value.ToString()+"%]</b></color>";
-            case ValueType.Blue:
-                return "<b><color=blue>["+value.ToString()+"%]</b></color>";
-            case ValueType.Green:
-                return "<b><color=green>["+value.ToString()+"%]</b></color>";
+                return "<b><color=#6900C6>[" + value.ToString()+"%]</b></color>";
             default:
                 return "<b><color=black>["+value.ToString()+"%]</b></color>";
         }
@@ -98,4 +94,5 @@ public enum ValueType
     Red,
     Green,
     Blue,
+    Smal,
 }

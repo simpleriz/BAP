@@ -14,6 +14,7 @@ public abstract class GameAction
     public abstract string GetContent(string content);
     public abstract GameAction Copy();
     public virtual bool SetValueByContentChar(int contentChar, GameValue gameValue){
+        if(valuesContentChars == null){return false;}
         int i = 0;
         foreach(Vector2 valueContentChar in valuesContentChars){
             if(valueContentChar[0] < contentChar & valueContentChar[1] > contentChar){
