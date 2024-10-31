@@ -16,6 +16,7 @@ public abstract class Action
     {
         AttackAction.damage = 0;
         HealAction.restoration = 0;
+        LuckAttribute.luck = 0;
     }
     public virtual Color GetColor(){
         return new Color(1,1,1,1);
