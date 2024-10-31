@@ -56,7 +56,7 @@ public class LineDragAndDrop : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     void GenerateNewLine(){
         gameLine = new GameLine();
         for(int i = 0;  i < 3; i++){
-            gameLine.actions.Add(LineLootTable.GetLine(LineLootTable.GetMaxCost()));
+            gameLine.actions.Add(LineLootTable.GetLine());
         }
         textMeshProUGUI.text = gameLine.GetContent("");
     }

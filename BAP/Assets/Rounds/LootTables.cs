@@ -140,6 +140,7 @@ public static class LineLootTable
 
         AddUnit(9, new JustHealAction(), new List<GameValue> { new StaticValue(10, ValueType.NoneType) });
         AddUnit(9, new JustDamageAction(), new List<GameValue> { new StaticValue(10, ValueType.NoneType) });
+        AddUnit(9, new JustLuckAction(), new List<GameValue> { new StaticValue(10, ValueType.NoneType) });
     }
 
     public static void AddUnit(int weight, GameAction content, List<GameValue> values)
@@ -168,6 +169,11 @@ public static class LineLootTable
         }
         GameAction gameAction = lineLoot.content.Copy();
         return gameAction;
+    }
+
+    public static GameAction GetLine()
+    {
+        return GetLine(Random.Range(0,GetMaxCost()));
     }
 
     public static int GetMaxCost(){
