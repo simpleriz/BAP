@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UIElements;
+//using System;
 
 
 public static class LootController
@@ -12,13 +14,9 @@ public static class LootController
     {
         valuesBoxes = new List<List<GameValue>>();
     }
-    static public void newValueBox(int weight)
+    static public void NewValueBox(int weight)
     {
-        valuesBoxes.Add(new List<GameValue>());
-        for (int i = 0; i < weight; i++)
-        {
-            valuesBoxes.Last().Add(ValueLootTable.GetValue());
-        }
+        valuesBoxes.Add(ValueLootTable.GetValueSequence(weight));
     }
 }
 
@@ -26,7 +24,9 @@ public static class LootController
 public static class ValueLootTable
 {
     static List<ValueLoot> lootTable;
-    static List<ValueLoot> lowLootTable;
+    static List<int> valueSequence;
+    static List<int> valueBuffer;
+    const int valueBufferSize = 15;
 
     private class ValueLoot
     {
@@ -65,19 +65,8 @@ public static class ValueLootTable
         AddUnit(1, new StaticValue(40, ValueType.Green));
         AddUnit(1, new StaticValue(40, ValueType.Blue));
 
-        lowLootTable = new List<ValueLoot>();
 
-
-        AddLowUnit(9, new StaticValue(10, ValueType.Red));
-        AddLowUnit(9, new StaticValue(10, ValueType.Green));
-        AddLowUnit(9, new StaticValue(10, ValueType.Blue));
-
-        AddLowUnit(9, new PercentValue(10, ValueType.Red));
-        AddLowUnit(9, new PercentValue(10, ValueType.Green));
-        AddLowUnit(9, new PercentValue(10, ValueType.Blue));
-
-        AddLowUnit(9, new StaticValue(1, ValueType.Smal));
-
+        GenerateValueSequence();
     }
 
     public static void AddUnit(int weight, GameValue content)
@@ -85,60 +74,49 @@ public static class ValueLootTable
         lootTable.Add(new ValueLoot(weight, content));
     }
 
-    public static void AddLowUnit(int weight, GameValue content)
+    static void GenerateValueSequence()
     {
-        lowLootTable.Add(new ValueLoot(weight, content));
+        valueSequence = new List<int>();
+        valueBuffer = new List<int>();
+        int i = 0;
+        foreach(var value in lootTable)
+        {
+            valueSequence.AddRange(Enumerable.Repeat(i, value.weight));
+            i++;
+        }
+        valueSequence = valueSequence.OrderBy(x => Random.Range(0, int.MaxValue)).ToList();
+        Debug.Log(string.Join(", ", valueSequence));
     }
 
-    public static GameValue GetValue(int cost)
+    static void AddToBuffer(int x)
     {
-        int i = 0;
-        int costCounter = lootTable[0].weight;
-        while (true)
+        valueBuffer.Add(x);
+        if(valueBuffer.Count >= valueBufferSize)
         {
-            if (cost <= costCounter)
-            {
-                return lootTable[i].content.Copy();
-            }
-            else
-            {
-                i++;
-                costCounter += lootTable[i].weight;
-            }
-        }
+            valueSequence.AddRange(valueBuffer.OrderBy(x => Random.Range(0, int.MaxValue)));
+            valueBuffer = new List<int>();
+        } 
     }
 
     public static GameValue GetValue()
     {
-        return GetValue(Random.Range(0,GetMaxCost()+1));
+        var value = lootTable[valueSequence[0]].content;
+        AddToBuffer(valueSequence[0]);
+        valueSequence.RemoveAt(0);
+        return value.Copy();
     }
 
-    public static GameValue GetLowValue(int cost)
+    public static List<GameValue> GetValueSequence(int lenght)
     {
-        int i = 0;
-        int costCounter = lowLootTable[0].weight;
-        while (true)
+        List<GameValue> gameValues = new List<GameValue>();
+        var values = valueSequence.Distinct().Take(lenght).ToList();
+        foreach (var value in values)
         {
-            if (cost <= costCounter)
-            {
-                return lowLootTable[i].content.Copy();
-            }
-            else
-            {
-                i++;
-                costCounter += lowLootTable[i].weight;
-            }
+            AddToBuffer(value);
+            valueSequence.Remove(value);
+            gameValues.Add(lootTable[value].content.Copy());
         }
-    }
-
-    public static int GetMaxCost()
-    {
-        return lootTable.Sum(a => a.weight);
-    }
-
-    public static int GetLowMaxCost()
-    {
-        return lowLootTable.Sum(a => a.weight);
+        return gameValues;
     }
 }
 
@@ -150,7 +128,6 @@ public static class LineLootTable
     {
         public int weight;
         public GameAction content;
-        public int valuesCount;
         public LineLoot(int w,GameAction gameValue)
         {
             weight = w;
@@ -190,10 +167,6 @@ public static class LineLootTable
             }
         }
         GameAction gameAction = lineLoot.content.Copy();
-        for(int ii = 0;ii < lineLoot.valuesCount; ii++)
-        {
-            gameAction.values.Add(ValueLootTable.GetLowValue(ValueLootTable.GetLowMaxCost()));
-        }
         return gameAction;
     }
 

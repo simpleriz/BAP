@@ -16,7 +16,7 @@ public class GameLine
             yield return action.RoundCoroutine(script);
             script.codeAnimator.nextStep();
         }
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.4f * script.corutineSpeed);
         script.codeAnimator.nextStep();
     }
     public virtual string GetContent(string content){
@@ -85,18 +85,18 @@ public class GameConditionalLine: GameLine
         if(condition.Check(script))
         {
             
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.4f * script.corutineSpeed);
             script.codeAnimator.SetBackgroundComplete();
             script.codeAnimator.SetContent("TRUE");
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.6f * script.corutineSpeed);
             script.codeAnimator.nextStep();
             yield return base.RoundCoroutine(script);
         }
         else
         {
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.4f * script.corutineSpeed);
             script.codeAnimator.SetBackgroundUncomplete();
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.6f * script.corutineSpeed);
             //if condition is false code...
         }
     }

@@ -7,9 +7,11 @@ public class ValuesCB : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost()));
-        NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost()));
-        NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost())); NewValue(ValueLootTable.GetValue(ValueLootTable.GetMaxCost()));
+
+        var values = ValueLootTable.GetValueSequence(5);
+        foreach (var value in values) {
+            NewValue(value);
+        }
 
     }
 

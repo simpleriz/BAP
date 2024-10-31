@@ -9,12 +9,14 @@ public class GameScript
     public FightPlace place;
     public CodeAnimator codeAnimator;
     public ActivitiesController activitiesController;
-
+    public float corutineSpeed = 1f;
+    public bool isCorutineActive;
     public GameScript(){
         lines = new List<GameLine>();
     } 
 
     public IEnumerator RoundCoroutine(){
+        isCorutineActive = true;
         place.Act(this);
         activitiesController.AddActivity(new AttackAction());
         activitiesController.AddActivity(new HealAction());
@@ -23,6 +25,7 @@ public class GameScript
             yield return line.RoundCoroutine(this);
         }
         codeAnimator.Hide();
+        isCorutineActive=false;
     }
 
     public string GetContent(){

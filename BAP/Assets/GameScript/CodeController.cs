@@ -16,7 +16,7 @@ public class CodeController : MonoBehaviour
     [SerializeField] CodeAnimator codeAnimator;
 
     [SerializeField] FightPlace fightPlace;
-    GameScript script;
+    public GameScript script;
     
     public ActivitiesController activitiesController;
     

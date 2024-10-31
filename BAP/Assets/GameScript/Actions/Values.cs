@@ -69,7 +69,7 @@ public class PercentValue : GameValue
         return 0;
     }
     public virtual float GetValue(GameScript script, float divisible){
-        return (divisible/100 * value);
+        return Mathf.Ceil(divisible/100 * value);
     }
 
     public override string GetContent(){

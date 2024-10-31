@@ -10,6 +10,7 @@ public class Activity : MonoBehaviour
     //public GameScript gameScript;
     [SerializeField] TextMeshProUGUI labelText;
     [SerializeField] Image image;
+    bool isVisible;
     public Action action;
     public Animator animator;
 
@@ -28,14 +29,20 @@ public class Activity : MonoBehaviour
         }
     }
 
-    public void onClick()
+    public void OnClick()
     {
         activitiesController.SelectActivity(this);
     }
 
     void Update(){
-        animator.SetBool("isVisible", action.IsVisible());
+        if(isVisible == false & action.IsVisible())
+        {
+            animator.SetBool("isVisible", true);
 
+            isVisible = true;
+
+            transform.SetSiblingIndex(2);
+        }
         labelText.text = action.GetLabel();
 
         image.color = action.GetColor();

@@ -22,7 +22,7 @@ public class FightVirus : MonoBehaviour
     public virtual void Kill(){
         foreach (var item in valueLoot)
         {
-            LootController.newValueBox(item);
+            LootController.NewValueBox(item);
         }
         Destroy(gameObject);
     }
