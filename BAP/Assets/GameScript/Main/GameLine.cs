@@ -12,8 +12,10 @@ public class GameLine
         actions = new List<GameAction>();
     }
     public virtual IEnumerator RoundCoroutine(GameScript script){
+        int i = 0;
         foreach(GameAction action in actions){
-            yield return action.RoundCoroutine(script);
+            yield return action.RoundCoroutine(script,this,i);
+            i++;
             script.codeAnimator.nextStep();
         }
         yield return new WaitForSeconds(0.4f * script.corutineSpeed);

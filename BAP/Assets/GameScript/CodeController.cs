@@ -27,7 +27,8 @@ public class CodeController : MonoBehaviour
         script.place = fightPlace;
         script.codeAnimator = codeAnimator;
         script.activitiesController = activitiesController;
-        
+        script.codeController = this;
+
         script.lines.Add(new GameLine());
         script.lines.Last().actions.Add(new EmptyAction());
 
@@ -35,7 +36,7 @@ public class CodeController : MonoBehaviour
         script.lines.Last().actions.Add(new EmptyAction());
 
         //StartCoroutine(script.RoundCoroutine());
-        codeText.text = script.GetContent();
+        UpdateContentView();
 
         Action.gameScript = script;
     }
@@ -50,7 +51,7 @@ public class CodeController : MonoBehaviour
         int clickCodeLine = script.FindGameLineByContentLine(clickLine);
         if(clickCodeLine != -1 & IsMouseOverText()){
             script.lines[clickCodeLine].actions = clipboard.CopyActions();
-            codeText.text = script.GetContent();
+            UpdateContentView();
             return true;
         }
         return false;
@@ -64,7 +65,7 @@ public class CodeController : MonoBehaviour
             int clickCodeAction = script.lines[clickCodeLine].FindGameActionByContentLine(clickLine);
             if(script.lines[clickCodeLine].actions[clickCodeAction].SetValueByContentChar(TMP_TextUtilities.FindNearestCharacterOnLine(codeText, Input.mousePosition, clickLine , null, true),clipboard))
             {
-                codeText.text = script.GetContent();
+                UpdateContentView();
                 return true;
             }
             else{
@@ -72,6 +73,11 @@ public class CodeController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void UpdateContentView()
+    {
+        codeText.text = script.GetContent();
     }
 
     private bool IsMouseOverText()

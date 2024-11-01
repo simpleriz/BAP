@@ -41,7 +41,11 @@ public class Activity : MonoBehaviour
 
             isVisible = true;
 
-            transform.SetSiblingIndex(2);
+            
+        }
+        else if(isVisible == false)
+        {
+            transform.SetAsLastSibling();
         }
         labelText.text = action.GetLabel();
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class GameValue
 {
+    public float value;
+
     public ValueType type = ValueType.NoneType;
     public abstract float GetValue(GameScript script);
     public abstract string GetContent();
@@ -15,7 +17,6 @@ public abstract class GameValue
 
 public class StaticValue : GameValue
 {
-    public float value;
     public StaticValue(float val){
         value = val;
     }
@@ -50,12 +51,10 @@ public class StaticValue : GameValue
         GameValue gameValue = new StaticValue(value,base.type);
         return gameValue;
     }
-    
 }
 
 public class PercentValue : GameValue
 {
-    public float value;
     public PercentValue(float val){
         value = val;
     }

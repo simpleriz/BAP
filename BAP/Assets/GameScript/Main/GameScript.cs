@@ -9,8 +9,11 @@ public class GameScript
     public FightPlace place;
     public CodeAnimator codeAnimator;
     public ActivitiesController activitiesController;
+    public CodeController codeController;
     public float corutineSpeed = 1f;
     public bool isCorutineActive;
+    public GameValue lastCompleteValue;
+    public GameAction lastCompleteAction;
     public GameScript(){
         lines = new List<GameLine>();
     } 
